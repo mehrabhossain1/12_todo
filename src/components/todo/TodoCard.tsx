@@ -28,9 +28,9 @@ const TodoCard = ({ title, description, id, isCompleted }: TTodoCardProps) => {
         name="complete"
         id="complete"
       />
-      <p className="font-semibold">{title}</p>
-      {/* <p>Time</p> */}
-      <div>
+      <p className="font-semibold flex-1">{title}</p>
+
+      <div className="flex-1">
         {isCompleted ? (
           <p className="text-green-500">Done</p>
         ) : (
