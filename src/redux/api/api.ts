@@ -5,6 +5,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 //   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
 //   endpoints: (builder) => ({
 //     getTodos: builder.query({
+// query: () => '/tasks'  // এই ৩ ভাবে করা যায়
+
+// query: () => {
+//   return {
+//     url: '/tasks',
+//     method: 'GET',
+//   };
+// },
+
 //       query: () => ({
 //         url: '/tasks',
 //       }),
@@ -23,7 +32,14 @@ export const baseApi = createApi({
         method: 'GET',
       }),
     }),
+    addTodo: builder.mutation({
+      query: (data) => ({
+        url: '/task',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetTodosQuery } = baseApi;
+export const { useGetTodosQuery, useAddTodoMutation } = baseApi;
