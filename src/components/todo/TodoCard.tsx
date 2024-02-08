@@ -1,9 +1,10 @@
 import { useAppDispatch } from '@/redux/hooks';
 import { Button } from '../ui/button';
 import { removeTodo, toggleComplete } from '@/redux/features/todoSlice';
+import { useUpdateTodoMutation } from '@/redux/api/api';
 
 type TTodoCardProps = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   isCompleted?: boolean;
@@ -14,28 +15,51 @@ type TTodoCardProps = {
 const TodoCard = ({
   title,
   description,
-  id,
+  _id,
   isCompleted,
   priority,
 }: TTodoCardProps) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  // const toggleState = () => {
-  //   console.log('Toggle');
+  const [updateTodo, { data, isLoading }] = useUpdateTodoMutation();
 
-  //   dispatch(toggleComplete(id));
-  // };
+  const toggleState = () => {
+    // console.log('Toggle');
+    const taskData = {
+      title,
+      description,
+      priority,
+      isCompleted: !isCompleted,
+    };
 
-  console.log({ title, description, id, isCompleted });
+    const options = {
+      id: _id,
+      data: {
+        title,
+        description,
+        priority,
+        isCompleted: !isCompleted,
+      },
+    };
+
+    // console.log(options);
+
+    updateTodo(options);
+
+    // dispatch(toggleComplete(id));
+  };
+
+  // console.log({ title, description, id, isCompleted });
 
   return (
     <div className="bg-white rounded-md flex justify-between items-center p-3 border">
       <input
         className="mr-3"
-        onChange={() => dispatch(toggleComplete(id))}
+        onChange={toggleState}
         type="checkbox"
         name="complete"
         id="complete"
+        defaultChecked={isCompleted}
       />
       <p className="font-semibold flex-1">{title}</p>
       <div className="flex-1 flex items-center gap-2">

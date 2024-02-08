@@ -5,8 +5,11 @@ import TodoFilter from './TodoFilter';
 import { useAppDispatch } from '@/redux/hooks';
 import { Button } from '../ui/button';
 import { useGetTodosQuery } from '@/redux/api/api';
+import { useState } from 'react';
 
 const TodoContainer = () => {
+  const [priority, setPriority] = useState('');
+
   // const [todos, setTodos] = useState({ data: [] });
   const dispatch = useAppDispatch();
 
@@ -14,7 +17,7 @@ const TodoContainer = () => {
   // const { todos } = useAppSelector((state) => state.todos);
 
   // * From server state
-  const { data: todos, isLoading } = useGetTodosQuery(undefined);
+  const { data: todos, isLoading } = useGetTodosQuery(priority);
 
   console.log(todos);
 
@@ -29,7 +32,7 @@ const TodoContainer = () => {
           Clear all
         </Button>
         <AddTodoModal />
-        <TodoFilter />
+        <TodoFilter priority={priority} setPriority={setPriority} />
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl  p-[5px]">
         <div className="bg-white p-5 w-full h-full rounded-lg space-y-3">
